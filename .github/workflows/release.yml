@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   release:
-    uses: mateusrdp/oxiguitar/.github/workflows/plugin-release.yml@plugin-release-several-files
+    uses: mateusrdp/oxiguitar/.github/workflows/plugin-release.yml@99722a630b8bf1d886f74281e092c2399cd38a18
     with:
       name: pipewire
       title: "PipeWire audio"
@@ -38,6 +38,6 @@ jobs:
       linux-ubuntu: "24.04"
       glibc: "2.39"
       apt-packages: libasound2-dev libpipewire-0.3-dev libclang-dev
-      tools-ref: plugin-release-several-files
+      tools-ref: 99722a630b8bf1d886f74281e092c2399cd38a18
     permissions:
       contents: write
