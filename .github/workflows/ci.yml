@@ -28,7 +28,7 @@ env:
   MSRV: "1.99"
   # Debian/Ubuntu packages the build needs on Linux, space-separated
   # (e.g. libasound2-dev). Empty: none.
-  APT_PACKAGES: ""
+  APT_PACKAGES: "libasound2-dev libpipewire-0.3-dev libclang-dev"
 
 jobs:
   rust:
