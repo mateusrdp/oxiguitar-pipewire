@@ -1,0 +1,601 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "oxiguitar-audio-pipewire-plugin",
+    "languages": [
+      "rust",
+      "shell",
+      "yaml",
+      "markdown",
+      "toml",
+      "json"
+    ],
+    "frameworks": [],
+    "description": "The PipeWire audio output plugin for OxiGuitar, a free, open-source guitar tablature and score viewer, editor and player. It plays OxiGuitar's sound through PipeWire, the sound system of current Linux desktops, with the lowest latency of the Linux outputs.",
+    "analyzedAt": "2026-11-08T00:00:00Z",
+    "gitCommitHash": "cf64508"
+  },
+  "nodes": [
+    {
+      "id": "pipeline:.github/workflows/ci.yml",
+      "type": "pipeline",
+      "name": "CI Workflow",
+      "filePath": ".github/workflows/ci.yml",
+      "summary": "Main CI pipeline: runs formatting, linting, tests on 6 platforms, license checks, and DCO sign-off verification. The ci-success job gates all merges.",
+      "tags": [
+        "ci",
+        "testing",
+        "linting",
+        "rust",
+        "multi-platform"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "pipeline:.github/workflows/release.yml",
+      "type": "pipeline",
+      "name": "Release Workflow",
+      "filePath": ".github/workflows/release.yml",
+      "summary": "Test builds on pull requests and draft releases on v* tags. Builds .oxp, .deb, .rpm packages via oxiguitar-packages reusable workflow.",
+      "tags": [
+        "release",
+        "build",
+        "packaging",
+        "linux"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "pipeline:.github/workflows/publish.yml",
+      "type": "pipeline",
+      "name": "Publish Workflow",
+      "filePath": ".github/workflows/publish.yml",
+      "summary": "Triggers after a release is published. Notifies package repositories and winget via oxiguitar-packages plugin-publish workflow.",
+      "tags": [
+        "publish",
+        "distribution",
+        "package-repos"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:Cargo.toml",
+      "type": "config",
+      "name": "Cargo Manifest",
+      "filePath": "Cargo.toml",
+      "summary": "Rust package manifest: defines the oxiguitar-audio-pipewire-plugin crate, its dependencies on oxiguitar-plugin SDK, oxiguitar-audio-cpal shared core, and cpal with PipeWire host. Sets lints for unsafe_code denial and clippy warnings.",
+      "tags": [
+        "rust",
+        "dependencies",
+        "plugin-sdk",
+        "cpal",
+        "pipewire"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:deny.toml",
+      "type": "config",
+      "name": "Cargo Deny Configuration",
+      "filePath": "deny.toml",
+      "summary": "cargo-deny configuration enforcing GPL-3.0-compatible licenses, denying unknown git sources and wildcards. Targets all six build platforms.",
+      "tags": [
+        "licensing",
+        "security",
+        "cargo-deny",
+        "policy"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:clippy.toml",
+      "type": "config",
+      "name": "Clippy Configuration",
+      "filePath": "clippy.toml",
+      "summary": "Clippy lint configuration for the Rust project.",
+      "tags": [
+        "clippy",
+        "linting",
+        "rust"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:rustfmt.toml",
+      "type": "config",
+      "name": "Rustfmt Configuration",
+      "filePath": "rustfmt.toml",
+      "summary": "Rust code formatting configuration.",
+      "tags": [
+        "rustfmt",
+        "formatting",
+        "rust"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:manifest.json",
+      "type": "config",
+      "name": "Plugin Manifest",
+      "filePath": "manifest.json",
+      "summary": "OxiGuitar plugin manifest defining interface version 1.3, plugin ID oxiguitar.audio-pipewire, Linux-only conditions, and the audio-device/pipewire service with priority 20.",
+      "tags": [
+        "plugin",
+        "manifest",
+        "pipewire",
+        "linux"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README",
+      "filePath": "README.md",
+      "summary": "Project overview: PipeWire audio output plugin for OxiGuitar. Covers installation, build instructions, history, and licensing.",
+      "tags": [
+        "documentation",
+        "overview",
+        "installation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CHANGELOG.md",
+      "type": "document",
+      "name": "Changelog",
+      "filePath": "CHANGELOG.md",
+      "summary": "Version history following Keep a Changelog format. First release (0.1.0) split from the main OxiGuitar repository.",
+      "tags": [
+        "documentation",
+        "history",
+        "versioning"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "Contributing Guide",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Contribution guidelines: branch model (develop/main), squash merges, DCO sign-off requirements, and bot commit handling.",
+      "tags": [
+        "documentation",
+        "contributing",
+        "dco"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CLAUDE.md",
+      "type": "document",
+      "name": "Claude Working Guide",
+      "filePath": "CLAUDE.md",
+      "summary": "Standing rules for AI-assisted development: library usage policy, branch model, DCO compliance, and project-specific conventions.",
+      "tags": [
+        "documentation",
+        "ai-guidelines",
+        "conventions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:build-oxp.sh",
+      "type": "file",
+      "name": "Build Script",
+      "filePath": "build-oxp.sh",
+      "summary": "Shell script that builds the .oxp release plugin file using cargo with --features oxp --crate-type cdylib. Runs on Linux only and outputs to dist/.",
+      "tags": [
+        "build",
+        "shell",
+        "release",
+        "linux"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib.rs",
+      "type": "file",
+      "name": "Main Plugin Implementation",
+      "filePath": "src/lib.rs",
+      "summary": "Core plugin implementation: defines the Audio struct implementing Plugin and Service traits. Wraps oxiguitar_audio_cpal::CpalDevice with cpal's PipeWire host. Provides probe() and call() methods for the audio-device/pipewire service interface.",
+      "tags": [
+        "rust",
+        "plugin",
+        "pipewire",
+        "audio",
+        "cpal",
+        "core",
+        "tested"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib.rs:Audio::start",
+      "type": "function",
+      "name": "Audio::start",
+      "filePath": "src/lib.rs",
+      "summary": "Plugin initialization: creates a CpalDevice with PipeWire host. Returns a platform-independent stub on non-Linux.",
+      "tags": [
+        "rust",
+        "initialization",
+        "constructor"
+      ],
+      "complexity": "simple",
+      "parent": "file:src/lib.rs"
+    },
+    {
+      "id": "function:src/lib.rs:Audio::service",
+      "type": "function",
+      "name": "Audio::service",
+      "filePath": "src/lib.rs",
+      "summary": "Service lookup: returns self as the audio-device/pipewire service when the interface and id match.",
+      "tags": [
+        "rust",
+        "service",
+        "lookup"
+      ],
+      "complexity": "simple",
+      "parent": "file:src/lib.rs"
+    },
+    {
+      "id": "function:src/lib.rs:Audio::probe",
+      "type": "function",
+      "name": "Audio::probe",
+      "filePath": "src/lib.rs",
+      "summary": "Device probe: checks PipeWire availability via CpalDevice on Linux, returns Unavailable on other platforms.",
+      "tags": [
+        "rust",
+        "probe",
+        "availability"
+      ],
+      "complexity": "simple",
+      "parent": "file:src/lib.rs"
+    },
+    {
+      "id": "function:src/lib.rs:Audio::call",
+      "type": "function",
+      "name": "Audio::call",
+      "filePath": "src/lib.rs",
+      "summary": "Service method dispatcher: forwards method calls to CpalDevice on Linux, returns Unsupported error on other platforms.",
+      "tags": [
+        "rust",
+        "dispatch",
+        "audio"
+      ],
+      "complexity": "simple",
+      "parent": "file:src/lib.rs"
+    },
+    {
+      "id": "class:src/lib.rs:Audio",
+      "type": "class",
+      "name": "Audio struct",
+      "filePath": "src/lib.rs",
+      "summary": "The OxiGuitar audio plugin struct. Contains a CpalDevice (Linux-only) and implements Plugin and Service traits.",
+      "tags": [
+        "rust",
+        "struct",
+        "plugin",
+        "service"
+      ],
+      "complexity": "simple",
+      "parent": "file:src/lib.rs"
+    },
+    {
+      "id": "file:tests/contract.rs",
+      "type": "file",
+      "name": "Contract Test Suite",
+      "filePath": "tests/contract.rs",
+      "summary": "Integration test: builds the .oxp file via oxiguitar_plugin_test::build() and validates it through OxiGuitar's plugin host. Linux-only.",
+      "tags": [
+        "rust",
+        "testing",
+        "contract",
+        "integration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/contract.rs:the_plugin_file_keeps_the_contract",
+      "type": "function",
+      "name": "the_plugin_file_keeps_the_contract",
+      "filePath": "tests/contract.rs",
+      "summary": "Single contract test: builds the .oxp and runs the full plugin host validation suite.",
+      "tags": [
+        "rust",
+        "test",
+        "contract"
+      ],
+      "complexity": "simple",
+      "parent": "file:tests/contract.rs"
+    },
+    {
+      "id": "config:.github/dependabot.yml",
+      "type": "config",
+      "name": "Dependabot Configuration",
+      "filePath": ".github/dependabot.yml",
+      "summary": "Weekly automated dependency updates for cargo and github-actions ecosystems. Excludes OxiGuitar SDK dependencies pinned by git tag.",
+      "tags": [
+        "dependabot",
+        "dependencies",
+        "automation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:.github/pull_request_template.md",
+      "type": "document",
+      "name": "Pull Request Template",
+      "filePath": ".github/pull_request_template.md",
+      "summary": "PR template: requires description, test instructions, and checklist for tests/docs/DCO compliance.",
+      "tags": [
+        "documentation",
+        "pr-template",
+        "github"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/check-dco.sh",
+      "type": "file",
+      "name": "DCO Sign-off Checker",
+      "filePath": "scripts/check-dco.sh",
+      "summary": "Shell script verifying DCO sign-off on every commit in a PR range. Skips Claude app and Dependabot commits. Used by the CI dco job.",
+      "tags": [
+        "dco",
+        "sign-off",
+        "compliance",
+        "shell"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "pipeline:.github/workflows/release.yml",
+      "target": "pipeline:.github/workflows/publish.yml",
+      "type": "triggers",
+      "direction": "forward"
+    },
+    {
+      "source": "config:Cargo.toml",
+      "target": "config:deny.toml",
+      "type": "configures",
+      "direction": "forward"
+    },
+    {
+      "source": "config:Cargo.toml",
+      "target": "config:clippy.toml",
+      "type": "configures",
+      "direction": "forward"
+    },
+    {
+      "source": "config:Cargo.toml",
+      "target": "config:rustfmt.toml",
+      "type": "configures",
+      "direction": "forward"
+    },
+    {
+      "source": "config:Cargo.toml",
+      "target": "config:manifest.json",
+      "type": "configures",
+      "direction": "forward"
+    },
+    {
+      "source": "file:build-oxp.sh",
+      "target": "config:Cargo.toml",
+      "type": "depends_on",
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib.rs",
+      "target": "class:src/lib.rs:Audio",
+      "type": "contains",
+      "direction": "forward"
+    },
+    {
+      "source": "class:src/lib.rs:Audio",
+      "target": "function:src/lib.rs:Audio::start",
+      "type": "contains",
+      "direction": "forward"
+    },
+    {
+      "source": "class:src/lib.rs:Audio",
+      "target": "function:src/lib.rs:Audio::service",
+      "type": "contains",
+      "direction": "forward"
+    },
+    {
+      "source": "class:src/lib.rs:Audio",
+      "target": "function:src/lib.rs:Audio::probe",
+      "type": "contains",
+      "direction": "forward"
+    },
+    {
+      "source": "class:src/lib.rs:Audio",
+      "target": "function:src/lib.rs:Audio::call",
+      "type": "contains",
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib.rs",
+      "target": "file:tests/contract.rs",
+      "type": "tested_by",
+      "direction": "forward",
+      "description": "Direction corrected (was test \u2192 production)"
+    },
+    {
+      "source": "file:tests/contract.rs",
+      "target": "function:tests/contract.rs:the_plugin_file_keeps_the_contract",
+      "type": "contains",
+      "direction": "forward"
+    },
+    {
+      "source": "pipeline:.github/workflows/ci.yml",
+      "target": "file:scripts/check-dco.sh",
+      "type": "depends_on",
+      "direction": "forward"
+    },
+    {
+      "source": "file:build-oxp.sh",
+      "target": "pipeline:.github/workflows/release.yml",
+      "type": "documents",
+      "direction": "forward"
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:core",
+      "name": "Core Plugin",
+      "description": "The main plugin implementation: Audio struct implementing Plugin and Service traits, wrapping cpal's PipeWire host through oxiguitar_audio_cpal. Contains the start, service, probe, and call methods.",
+      "nodeIds": [
+        "file:src/lib.rs",
+        "class:src/lib.rs:Audio",
+        "function:src/lib.rs:Audio::start",
+        "function:src/lib.rs:Audio::service",
+        "function:src/lib.rs:Audio::probe",
+        "function:src/lib.rs:Audio::call"
+      ]
+    },
+    {
+      "id": "layer:testing",
+      "name": "Testing",
+      "description": "Integration and contract tests that build the .oxp file and validate it through OxiGuitar's plugin host.",
+      "nodeIds": [
+        "file:tests/contract.rs",
+        "function:tests/contract.rs:the_plugin_file_keeps_the_contract"
+      ]
+    },
+    {
+      "id": "layer:build-system",
+      "name": "Build System",
+      "description": "Build configuration and packaging: Cargo.toml, the build script, and the plugin manifest defining the .oxp interface.",
+      "nodeIds": [
+        "config:Cargo.toml",
+        "file:build-oxp.sh",
+        "config:manifest.json"
+      ]
+    },
+    {
+      "id": "layer:linting",
+      "name": "Linting and Security",
+      "description": "Code quality and dependency security: Rustfmt, Clippy, and cargo-deny configurations for formatting, linting, and license compliance.",
+      "nodeIds": [
+        "config:clippy.toml",
+        "config:rustfmt.toml",
+        "config:deny.toml"
+      ]
+    },
+    {
+      "id": "layer:ci-cd",
+      "name": "CI/CD",
+      "description": "Continuous integration and deployment pipelines: CI workflow with multi-platform testing, release packaging, and package publishing.",
+      "nodeIds": [
+        "pipeline:.github/workflows/ci.yml",
+        "pipeline:.github/workflows/release.yml",
+        "pipeline:.github/workflows/publish.yml",
+        "config:.github/dependabot.yml"
+      ]
+    },
+    {
+      "id": "layer:documentation",
+      "name": "Documentation",
+      "description": "Project documentation: README, changelog, contributing guide, AI working guidelines, and PR template.",
+      "nodeIds": [
+        "document:README.md",
+        "document:CHANGELOG.md",
+        "document:CONTRIBUTING.md",
+        "document:CLAUDE.md",
+        "document:.github/pull_request_template.md"
+      ]
+    },
+    {
+      "id": "layer:compliance",
+      "name": "Compliance",
+      "description": "Developer Certificate of Origin sign-off verification script used by the CI pipeline.",
+      "nodeIds": [
+        "file:scripts/check-dco.sh"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Project Overview",
+      "description": "Start with the README to understand what oxiguitar-pipewire is: a PipeWire audio output plugin for OxiGuitar, a guitar tablature and score viewer. It plays OxiGuitar's sound through PipeWire with the lowest latency on Linux desktops.",
+      "nodeIds": [
+        "document:README.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Plugin Manifest",
+      "description": "The manifest.json defines the plugin's identity: interface version 1.3, plugin ID oxiguitar.audio-pipewire, Linux-only conditions, and the audio-device/pipewire service with priority 20.",
+      "nodeIds": [
+        "config:manifest.json"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Build Configuration",
+      "description": "Cargo.toml defines the crate, its dependencies on the OxiGuitar plugin SDK, the shared cpal audio core, and cpal with PipeWire host. The build-oxp.sh script compiles the .oxp release file.",
+      "nodeIds": [
+        "config:Cargo.toml",
+        "file:build-oxp.sh"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "Core Plugin Implementation",
+      "description": "src/lib.rs is the heart of the plugin. The Audio struct implements Plugin (start) and Service (service, probe, call) traits. It wraps a CpalDevice using cpal's PipeWire host, with platform guards ensuring it compiles everywhere but only functions on Linux.",
+      "nodeIds": [
+        "file:src/lib.rs",
+        "class:src/lib.rs:Audio",
+        "function:src/lib.rs:Audio::start",
+        "function:src/lib.rs:Audio::service",
+        "function:src/lib.rs:Audio::probe",
+        "function:src/lib.rs:Audio::call"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Contract Testing",
+      "description": "tests/contract.rs builds the .oxp file and validates it through OxiGuitar's plugin host \u2014 the same way the app would load it. This ensures the plugin meets the SDK contract.",
+      "nodeIds": [
+        "file:tests/contract.rs",
+        "function:tests/contract.rs:the_plugin_file_keeps_the_contract"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Code Quality and Security",
+      "description": "Three config files enforce code quality: rustfmt.toml for formatting, clippy.toml for linting, and deny.toml for license compliance and dependency security. All dependencies are checked against GPL-3.0 compatibility.",
+      "nodeIds": [
+        "config:rustfmt.toml",
+        "config:clippy.toml",
+        "config:deny.toml"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "CI/CD Pipelines",
+      "description": "Three GitHub Actions workflows: ci.yml runs tests on 6 platforms, checks formatting, linting, licenses, and DCO sign-off; release.yml builds packages on PRs and draft releases; publish.yml notifies package repos after a release.",
+      "nodeIds": [
+        "pipeline:.github/workflows/ci.yml",
+        "pipeline:.github/workflows/release.yml",
+        "pipeline:.github/workflows/publish.yml"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "Compliance and Contributing",
+      "description": "The DCO sign-off checker (scripts/check-dco.sh) verifies commit sign-offs in CI. CONTRIBUTING.md explains the branch model and sign-off process. CLAUDE.md documents standing rules for AI-assisted development.",
+      "nodeIds": [
+        "file:scripts/check-dco.sh",
+        "document:CONTRIBUTING.md",
+        "document:CLAUDE.md",
+        "document:CHANGELOG.md"
+      ]
+    }
+  ]
+}
