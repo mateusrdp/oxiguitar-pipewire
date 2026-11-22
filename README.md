@@ -22,6 +22,7 @@ Rust 1.99 or later from [rustup](https://rustup.rs). The plugin SDK comes from O
 ```sh
 cargo test          # unit tests, and the contract suite on the built .oxp file (needs libasound2-dev, libpipewire-0.3-dev and libclang-dev on Debian and Ubuntu)
 ./build-oxp.sh      # dist/audio-pipewire-VERSION-SYSTEM-ARCH.oxp
+python3 scripts/test-all.py   # every test, as the manual's Testing page says
 ```
 
 ## History
