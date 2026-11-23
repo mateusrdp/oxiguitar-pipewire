@@ -2,6 +2,8 @@
 
 The PipeWire audio output plugin for [OxiGuitar](https://github.com/mateusrdp/oxiguitar), a free, open-source guitar tablature and score viewer, editor and player for Windows, macOS and Linux. It plays OxiGuitar's sound through PipeWire, the sound system of current Linux desktops, with the lowest latency of the Linux outputs.
 
+In plain words: OxiGuitar works out the sound, and an output plugin hands it to the operating system's sound system on time, batch after batch. Every system has its own sound system, so each gets its own plugin. The [manual](https://mateusrdp.github.io/oxiguitar-pipewire/) explains latency and buffers.
+
 - Plugin file `audio-pipewire.oxp`, id `oxiguitar.audio-pipewire`, Linux only (x86_64 and ARM64). It needs `libpipewire-0.3` at run time, which every PipeWire desktop has. Where PipeWire is not running, OxiGuitar uses oxiguitar-alsa.
 - It is built on Ubuntu 24.04 (PipeWire's headers do not build on 22.04), so it needs glibc 2.39 or newer; the AppImage, which is built on 22.04, plays through ALSA instead.
 - It shares its code with the other outputs, oxiguitar-alsa, oxiguitar-wasapi and oxiguitar-coreaudio: a stream on one of cpal's hosts, in `oxiguitar-audio-cpal`, which lives in the OxiGuitar repository and is tagged with the SDK.
@@ -28,6 +30,10 @@ python3 scripts/test-all.py   # every test, as the manual's Testing page says
 ## History
 
 This plugin lived in the OxiGuitar repository until its version 0.11.0. Its history came along; an issue number such as `mateusrdp/oxiguitar#123` in an old commit message is in that repository.
+
+## Credits
+
+Built on [cpal](https://github.com/RustAudio/cpal) (Apache-2.0) and [pipewire-rs](https://gitlab.freedesktop.org/pipewire/pipewire-rs) (MIT), through OxiGuitar's shared `oxiguitar-audio-cpal` layer, and OxiGuitar's plugin SDK. Thanks to the RustAudio community and the PipeWire project. The manual's [Credits](https://mateusrdp.github.io/oxiguitar-pipewire/credits.html) page lists every project with its authors and licence. Thank you to all of them.
 
 ## Licence
 
