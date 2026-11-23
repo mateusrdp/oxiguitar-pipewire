@@ -1,0 +1,16 @@
+{
+  "repository": "mateusrdp/oxiguitar-pipewire",
+  "os": [
+    "linux"
+  ],
+  "plugins": [
+    {
+      "name": "audio-pipewire",
+      "package": "oxiguitar-audio-pipewire-plugin",
+      "library": "oxiguitar_audio_pipewire_plugin",
+      "os": [
+        "linux"
+      ]
+    }
+  ]
+}
