@@ -6,7 +6,7 @@ In plain words: OxiGuitar works out the sound, and an output plugin hands it to 
 
 - Plugin file `audio-pipewire.oxp`, id `oxiguitar.audio-pipewire`, Linux only (x86_64 and ARM64). It needs `libpipewire-0.3` at run time, which every PipeWire desktop has. Where PipeWire is not running, OxiGuitar uses oxiguitar-alsa.
 - It is built on Ubuntu 24.04 (PipeWire's headers do not build on 22.04), so it needs glibc 2.39 or newer; the AppImage, which is built on 22.04, plays through ALSA instead.
-- It shares its code with the other outputs, oxiguitar-alsa, oxiguitar-wasapi and oxiguitar-coreaudio: a stream on one of cpal's hosts, in `oxiguitar-audio-cpal`, which lives in the OxiGuitar repository and is tagged with the SDK.
+- It shares its code with the other outputs, oxiguitar-alsa, oxiguitar-wasapi and oxiguitar-coreaudio: a stream on one of cpal's hosts, in [oxiguitar-audio-cpal](https://github.com/mateusrdp/oxiguitar-audio-cpal), which this plugin depends on by tag.
 - It plays sound only on your machine: it uploads and downloads nothing.
 
 ## Manual
