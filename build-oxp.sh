@@ -23,6 +23,27 @@ version="${version##*[#@]}"
 host="$(rustc -vV | sed -n 's/^host: //p')"
 mkdir -p dist
 
+# pack LIBRARY OUT [MANIFEST]: the plugin file OUT (mateusrdp/oxiguitar#347),
+# an uncompressed tar archive holding MANIFEST (default manifest.json) as
+# manifest.json first, the library second as plugin.so, plugin.dll or
+# plugin.dylib, then the ui and assets folders beside the manifest, if
+# there are any. COPYFILE_DISABLE keeps macOS's tar from adding ._ files.
+pack() {
+    local ext="${1##*.}" manifest="${3:-manifest.json}" stage folder
+    local more=()
+    stage="$(mktemp -d)"
+    cp "$manifest" "$stage/manifest.json"
+    cp "$1" "$stage/plugin.$ext"
+    for folder in ui assets; do
+        if [[ -d "$(dirname "$manifest")/$folder" ]]; then
+            cp -R "$(dirname "$manifest")/$folder" "$stage/"
+            more+=("$folder")
+        fi
+    done
+    (cd "$stage" && COPYFILE_DISABLE=1 tar --format=ustar -cf - manifest.json "plugin.$ext" ${more[@]+"${more[@]}"}) > "$2"
+    rm -rf "$stage"
+}
+
 build() {
     cargo rustc --locked --release --features oxp --crate-type cdylib "$@"
 }
@@ -31,7 +52,7 @@ case "$host" in
     *linux*)
         out="dist/$NAME-$version-linux-${host%%-*}.oxp"
         build
-        cp "target/release/lib$LIBRARY.so" "$out"
+        pack "target/release/lib$LIBRARY.so" "$out"
         ;;
     *)
         echo "build-oxp.sh: $NAME is for Linux only (this is $host)" >&2
